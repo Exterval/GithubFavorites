@@ -23,5 +23,8 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(repos)
+	fmt.Println("Top 10 repos for the past week based on stars:")
+	for _, repo := range repos {
+		fmt.Printf("%s: %s\n", repo.Name, repo.Description)
+	}
 }
