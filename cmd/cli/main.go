@@ -9,15 +9,19 @@ import (
 )
 
 func main() {
-	// make a cli app that fetches the top 5 favorites in GitHub.
+	// make a app that fetches the top 10 repos with the most stars made last week
+	//  in GitHub.
 	fmt.Println("Hello Golang!")
 	if err := godotenv.Load(); err != nil && !os.IsNotExist(err) {
 		fmt.Println("Error loading .env file")
 	}
 	api := GithubFavorites.Api{
-		Addr: "https://api.github.com",
+		Addr: GithubFavorites.GetEnv("GITHUB_URL", ""),
 		Key:  GithubFavorites.GetEnv("GITHUB_PAT", ""),
 	}
-
-	fmt.Print(api)
+	repos, err := api.GetRepositories()
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(repos)
 }
